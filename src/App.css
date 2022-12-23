@@ -17,44 +17,57 @@
 }
 
 body {
-  background-image: linear-gradient(to right, #000000, #000000, #2c2831, #000000, #000000);
-
+  background-image: linear-gradient(to right, #030520, #08151a);
 }
 
 .score-text,
 .high-score-text {
   text-align: center;
-  padding: 20px;
+  padding: 10px;
   font-weight: bolder;
-  font-size: xx-large;
-  color: rgb(168, 132, 132);
-  text-shadow: 0 0 5px #4f4545,
-    0 0 10px rgb(41, 35, 35),
-    0 0 15px rgb(44, 40, 40),
-    0 0 20px rgb(36, 34, 34),
-    0 0 25px rgb(0, 0, 0);
+  font-size: x-large;
+  color: rgb(223, 184, 184);
+  text-shadow: 0 0 5px #341616,
+    0 0 10px rgb(59, 27, 27),
+    0 0 15px rgb(53, 18, 18),
+    0 0 20px rgb(80, 19, 19),
+    0 0 25px rgb(41, 2, 2);
 }
 
 .image-name {
-  font-size: large;
+  font-size: medium;
   padding: 5px;
   font-weight: bolder;
-  color: rgb(238, 188, 188);
-  text-shadow: 0px 0px 10px rgb(104, 78, 78),
-    0px 0px 10px rgb(193, 30, 30),
-    0px 0px 10px rgb(125, 75, 75),
-    0px 0px 10px rgb(123, 46, 46),
-    0px 0px 10px rgb(173, 55, 55),
-    0px 0px 10px rgb(101, 16, 16);
+  color: rgb(5, 3, 3);
+  text-shadow: 0px 0px 10px rgb(255, 255, 255),
+    0px 0px 10px rgb(200, 185, 185),
+    0px 0px 10px rgb(204, 191, 191),
+    0px 0px 10px rgb(255, 255, 255),
+    0px 0px 10px rgb(255, 255, 255),
+    0px 0px 10px rgb(255, 255, 255);
   text-align: center;
+  padding: 20px;
 }
 
 .card-container {
+  width: max(210px, 80%);
+  margin: 0 auto;
+  align-items: center;
+  padding: 30px 50px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.card {
+  width: fit-content;
+  background-color: #9cc41918;
+  height: max-content;
+  justify-self: center;
+  box-shadow: 0px 0px 3px 3px rgb(21, 35, 58);
 }
 
 .card img {
+  width: 100%;
   height: 200px;
-  width: 150px;
 }

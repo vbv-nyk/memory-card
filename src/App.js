@@ -1,5 +1,5 @@
 import './App.css';
-import { cardData } from './CardsData';
+import { cardData, fetchAnime } from './CardsData';
 import { useEffect, useState } from 'react';
 
 let currentCards = [];
@@ -68,6 +68,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [clicked, setClicked] = useState([]);
+  const [load, setLoad] = useState(false);
   let props = { score, highScore, setScore, setHighScore, clicked, setClicked };
   useEffect(() => {
     const tempClickedArray = [];
@@ -76,6 +77,12 @@ function App() {
     }
     setClicked(n => tempClickedArray);
   }, [])
+  useEffect(() => {
+    fetchAnime(10).then(() => {
+      setLoad(true);
+    })
+  }, [])
+
   function loadCard() {
     let Cards = cardData.map(card => {
       return (<Card data={{ ...card, ...props }} key={card.key} />)

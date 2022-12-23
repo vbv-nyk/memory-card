@@ -3,22 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { fetchAnime, resetCard } from './CardsData';
+import { cardData, fetchAnime, resetCard } from './CardsData';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
-export function newGame(num) {
-  fetchAnime(num).then(() => {
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
-  })
+export function newGame() {
+  root.render(
+    <App />
+  );
 }
 resetCard();
-newGame(5);
+newGame();
 
 
 // If you want to start measuring performance in your app, pass a function

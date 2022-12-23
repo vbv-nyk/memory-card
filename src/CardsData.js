@@ -21,9 +21,9 @@ query ($id: Int) { # Define which variables will be used in the query (id)
 export async function fetchAnime(num) {
     for (let i = 0; i < num;) {
         let variables = {
-            id: Math.floor(Math.random() * 1000 + 1)
+            id: Math.floor(Math.random() * 1500 + 1)
         };
-        var url = 'https://graphql.anilist.co',
+        let url = 'https://graphql.anilist.co',
             options = {
                 mode: 'cors',
                 method: 'POST',
@@ -36,25 +36,21 @@ export async function fetchAnime(num) {
                     variables: variables
                 }),
             };
-        try {
-            let anime = await fetch(url, options);
-            if (anime.status === 404) {
-                throw new Error("Error 404 trying again")
-            }
-            let animeData = await anime.json();
-            if (animeData.data.Media?.title?.english) {
-                let newCard = {
-                    name: animeData.data.Media.title.english,
-                    source: animeData.data.Media.coverImage.large,
-                    key: i,
-                }
-                cardData.push(newCard);
-                i++;
-            }
+        let anime = await fetch(url, options);
+        if (anime.status === 404) {
+            continue;
         }
-        catch (e) {
-            console.log(e, "trying again");
+        let animeData = await anime.json();
+        if (animeData.data.Media?.title?.english) {
+            let newCard = {
+                name: animeData.data.Media.title.english,
+                source: animeData.data.Media.coverImage.large,
+                key: i,
+            }
+            cardData.push(newCard);
+            i++;
         }
+
     }
     return cardData;
 }
