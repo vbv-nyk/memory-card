@@ -1,7 +1,10 @@
-export let cardData = []
+export let cardData;
+export function resetCard() {
+    cardData = [];
+}
 // Here we define our query as a multi-line string
 // Storing it in a separate .graphql/.gql file is also possible
-var query = `
+let query = `
 query ($id: Int) { # Define which variables will be used in the query (id)
   Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
     id
