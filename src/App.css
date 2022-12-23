@@ -20,17 +20,23 @@ body {
   background-image: linear-gradient(to right, #030520, #08151a);
 }
 
+.game-info {
+  display: flex;
+  justify-content: space-around;
+}
+
 .score-text,
-.high-score-text {
+.high-score-text,
+.level-text {
   text-align: center;
   padding: 10px;
   font-weight: bolder;
   font-size: x-large;
-  color: rgb(223, 184, 184);
+  color: rgb(179, 122, 122);
   text-shadow: 0 0 5px #341616,
-    0 0 10px rgb(59, 27, 27),
-    0 0 15px rgb(53, 18, 18),
-    0 0 20px rgb(80, 19, 19),
+    0 0 10px rgb(41, 4, 4),
+    0 0 15px rgb(45, 8, 8),
+    0 0 20px rgb(209, 169, 169),
     0 0 25px rgb(41, 2, 2);
 }
 
@@ -47,6 +53,7 @@ body {
     0px 0px 10px rgb(255, 255, 255);
   text-align: center;
   padding: 20px;
+
 }
 
 .card-container {
@@ -56,7 +63,22 @@ body {
   padding: 30px 50px;
   display: grid;
   gap: 15px;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.card-container-loading {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  background-image: url('./loading.gif');
+  background-color: #030520;
+  background-position-x: center;
+  background-size: 300px;
+  background-position-y: center;
+  background-repeat: no-repeat;
 }
 
 .card {
@@ -64,7 +86,7 @@ body {
   background-color: #9cc41918;
   height: max-content;
   justify-self: center;
-  box-shadow: 0px 0px 3px 3px rgb(21, 35, 58);
+  box-shadow: 0px 0px 4px 6px rgb(29, 41, 72);
 }
 
 .card img {

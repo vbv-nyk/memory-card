@@ -1,6 +1,7 @@
 import './App.css';
 import { cardData, fetchAnime } from './CardsData';
 import { useEffect, useState } from 'react';
+import { newGame } from '.';
 
 let currentCards = [];
 function CardsContainer({ children }) {
@@ -35,6 +36,14 @@ function Card({ data }) {
           return c;
         }
       });
+      const checkBoard = updatedArray.every(element => {
+        return element === true;
+      });
+      if (checkBoard) {
+        data.setLoad(false);
+        data.setLevel(n => n + 1);
+        newGame(data.size + 3);
+      }
       data.setClicked(updatedArray);
     }
   }
@@ -54,35 +63,45 @@ function resetCards(data) {
   data.setClicked(tempArray);
   data.setScore(0);
   data.setHighScore(Math.max(data.score, data.highScore));
+  if (data.level !== 1) {
+    data.setLoad(false);
+    data.setLevel(1);
+    newGame(5);
+  }
 }
 function ScoreBoard({ data }) {
-  return (<>
+  return (<div className="game-info">
     <div className='score-text'>{`Your current score is: ${data.score}`}</div>
     <div className='high-score-text'>{`Your Highscore is: ${data.highScore}`}</div>
-  </>)
+    <div className='level-text'>{`Current Level is: ${data.level}`}</div>
+  </div>)
 }
 
-
-
-function App() {
+function App({ size }) {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [clicked, setClicked] = useState([]);
   const [load, setLoad] = useState(false);
-  let props = { score, highScore, setScore, setHighScore, clicked, setClicked };
+  const [level, setLevel] = useState(1);
+  let props = { score, highScore, setScore, setHighScore, clicked, setClicked, load, setLoad, size, level, setLevel };
   useEffect(() => {
     const tempClickedArray = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < size; i++) {
       tempClickedArray.push(false);
     }
     setClicked(n => tempClickedArray);
-  }, [])
+  }, [size])
   useEffect(() => {
-    fetchAnime(10).then(() => {
+    console.log(`Fetching ${size} Data`);
+    fetchAnime(size).then(() => {
       setLoad(true);
     })
-  }, [])
+  }, [size])
+  if (!load) {
+    return <div className="card-container-loading">
 
+    </div>
+  }
   function loadCard() {
     let Cards = cardData.map(card => {
       return (<Card data={{ ...card, ...props }} key={card.key} />)

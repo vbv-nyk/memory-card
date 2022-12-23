@@ -19,6 +19,7 @@ query ($id: Int) { # Define which variables will be used in the query (id)
 `;
 
 export async function fetchAnime(num) {
+    resetCard();
     for (let i = 0; i < num;) {
         let variables = {
             id: Math.floor(Math.random() * 1500 + 1)
@@ -50,7 +51,6 @@ export async function fetchAnime(num) {
             cardData.push(newCard);
             i++;
         }
-
     }
     return cardData;
 }

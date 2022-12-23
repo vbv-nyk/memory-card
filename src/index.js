@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { cardData, fetchAnime, resetCard } from './CardsData';
+import { resetCard } from './CardsData';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
-export function newGame() {
+export function newGame(num) {
   root.render(
-    <App />
+    <App size={num} />
   );
 }
 resetCard();
-newGame();
+newGame(5);
 
 
 // If you want to start measuring performance in your app, pass a function
