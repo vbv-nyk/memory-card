@@ -1,52 +1,59 @@
-export const cardData = [
-    {
-        key: 1,
-        name: 'Couple Sitting Together',
-        source: 'https://images.pexels.com/photos/14683126/pexels-photo-14683126.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 2,
-        name: 'Heart On Snow',
-        source: 'https://images.pexels.com/photos/6372804/pexels-photo-6372804.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 3,
-        name: 'Girl In Library',
-        source: 'https://images.pexels.com/photos/14794875/pexels-photo-14794875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 4,
-        name: 'Antelope In Snow',
-        source: 'https://images.pexels.com/photos/11220223/pexels-photo-11220223.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 5,
-        name: 'Vehicles On Road',
-        source: 'https://images.pexels.com/photos/14715138/pexels-photo-14715138.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 6,
-        name: 'Sitting By The Bridge',
-        source: 'https://images.pexels.com/photos/14116777/pexels-photo-14116777.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 7,
-        name: 'House By The Sea',
-        source: 'https://images.pexels.com/photos/14768797/pexels-photo-14768797.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 8,
-        name: 'Tree With No Leaves',
-        source: 'https://images.pexels.com/photos/2824673/pexels-photo-2824673.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 9,
-        name: 'Monument',
-        source: 'https://images.pexels.com/photos/13999202/pexels-photo-13999202.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-    },
-    {
-        key: 10,
-        name: 'Cat By The Tree',
-        source: 'https://images.pexels.com/photos/14798149/pexels-photo-14798149.jpeg?auto',
-    },
-]  
+export let cardData = []
+// Here we define our query as a multi-line string
+// Storing it in a separate .graphql/.gql file is also possible
+var query = `
+query ($id: Int) { # Define which variables will be used in the query (id)
+  Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+    id
+    coverImage{
+        large
+    }
+    title {
+      english
+    }
+  }
+}
+`;
+
+export async function fetchAnime(num) {
+    for (let i = 0; i < num;) {
+        let variables = {
+            id: Math.floor(Math.random() * 1000 + 1)
+        };
+        var url = 'https://graphql.anilist.co',
+            options = {
+                mode: 'cors',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    variables: variables
+                }),
+            };
+        try {
+            let anime = await fetch(url, options);
+            if (anime.status === 404) {
+                throw new Error("Error 404 trying again")
+            }
+            let animeData = await anime.json();
+            if (animeData.data.Media?.title?.english) {
+                let newCard = {
+                    name: animeData.data.Media.title.english,
+                    source: animeData.data.Media.coverImage.large,
+                    key: i,
+                }
+                cardData.push(newCard);
+                i++;
+            }
+        }
+        catch (e) {
+            console.log(e, "trying again");
+        }
+    }
+    return cardData;
+}
+
+
